@@ -4,14 +4,9 @@
 # Translated by Guido van Rossum from C source provided by
 # Adrian Baddeley.  Adapted by Raymond Hettinger for use with
 # the Mersenne Twister and os.urandom() core generators.
-#
 # Ported to Elixir by Yuce Tekol.
-#
 # Uniform random number generation code is provided by Kenji Rikitake.
 # https://github.com/jj1bdx/tinymt-erlang/blob/master/src/tinymt32.erl
-#
-# shuffle code is taken straight from Elixir source, and adapted to use
-# TinyMT Erlang.
 
 defmodule Random do
   use Bitwise
@@ -172,18 +167,7 @@ defmodule Random do
 
   Note that for even rather small `size(x)`, the total number of permutations of x is larger than the period of most random number generators; this implies that most permutations of a long sequence can never be generated.
   """
-  def shuffle(enumerable) do
-    randomized = Enum.reduce(enumerable, [], fn x, acc ->
-      [{random(), x}|acc]
-    end)
-    unwrap(:lists.keysort(1, randomized), [])
-  end
-
-  defp unwrap([{_, h} | enumerable], t) do
-    unwrap(enumerable, [h|t])
-  end
-
-  defp unwrap([], t), do: t
+  def shuffle(x), do: Enum.shuffle(x)
 
   @doc """
   Chooses k unique random elements from a population sequence or set.
