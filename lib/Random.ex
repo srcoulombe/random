@@ -5,8 +5,6 @@
 # Adrian Baddeley.  Adapted by Raymond Hettinger for use with
 # the Mersenne Twister and os.urandom() core generators.
 # Ported to Elixir by Yuce Tekol.
-# Uniform random number generation code is provided by Kenji Rikitake.
-# https://github.com/jj1bdx/tinymt-erlang/blob/master/src/tinymt32.erl
 
 defmodule Random do
   use Bitwise
@@ -67,11 +65,12 @@ defmodule Random do
 
       Random.seed(5)
   """
-  def seed({a, b, c}) do
-    :tinymt32.seed(a, b, c)
+  def seed({a, b, c})
+    when is_integer(a) and is_integer(b) and is_integer(c) do
+  :random.seed(a, b, c)
   end
 
-  def seed(a), do: :tinymt32.seed(0, a, 0)
+  def seed(a) when is_integer(a), do: :random.seed(0, a, 0)
 
   @doc """
   Returns a random integer from range `[0, stop)`.
@@ -225,33 +224,11 @@ defmodule Random do
     end
   end
 
-  defp seed0 do
-    {:intstate32, 297425621, 2108342699, 4290625991,
-                  2232209075, 2406486510, 4235788063,
-                  932445695}
-  end
-
-  defp temper_float(r) do
-    :tinymt32.temper(r) * (1.0 / 4294967296.0)
-  end
-
-  defp uniform_s(r0) do
-    r1 = :tinymt32.next_state(r0)
-    {temper_float(r1), r1}
-  end
 
   @doc """
   Return the next random floating point number in the range [0.0, 1.0).
   """
-  def random do
-    r = case :erlang.get(:tinymt32_seed) do
-      :undefined -> seed0()
-      other -> other
-    end
-    {v, r2} = uniform_s(r)
-    :erlang.put(:tinymt32_seed, r2)
-    v
-  end
+  def random, do: :rand.uniform
 
   @doc """
   Return a random floating point number N such that a <= N <= b for a <= b and b <= N <= a for b < a.
