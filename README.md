@@ -19,14 +19,6 @@ the von Mises distribution is available.
 * [Python 3 random module documentation](http://docs.python.org/3/library/random.html)
 
 
-## Build
-
-The only dependency is [TinyMT Erlang](https://github.com/jj1bdx/tinymt-erlang), which
-is available on [hex.pm](https://hex.pm/packages/tinymt)
-
-    $ mix get.deps
-    $ mix
-
 ## Test
 
     $ mix test

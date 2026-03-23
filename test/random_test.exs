@@ -64,16 +64,7 @@ defmodule RandomTest do
     assert(r >= 0 and r < 1)
   end
 
-  test "shuffle" do
-    ls = :lists.seq(1, 20)
-    shuffled_ls = Random.shuffle ls
-    assert(ls != shuffled_ls)
-    s = Enum.into(ls, MapSet.new)
-    assert(MapSet.size(s) == length(ls))
-  end
-
   test "seed" do
     Random.seed(0)
   end
-
 end

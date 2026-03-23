@@ -7,8 +7,7 @@ defmodule Random.Mixfile do
       elixir: ">= 1.4.0",
       name: "Random",
       description: description(),
-      package: package(),
-      deps: deps()
+      package: package()
     ]
   end
 
@@ -23,9 +22,5 @@ defmodule Random.Mixfile do
      licenses: ["MIT"],
      links: %{"GitHub" => "https://github.com/yuce/random",
               "Docs" => "http://yuce.me/random/"}]
-  end
-
-  defp deps do
-    [{:tinymt, "~> 0.3.1"}]
   end
 end
